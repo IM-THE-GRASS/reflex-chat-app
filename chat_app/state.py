@@ -4,26 +4,30 @@ from reflex.state import BaseState
 class State(rx.State):
     user = "user"
     active_person:str = "None"
-    people : dict = {
+    people : dict[str, dict] = {
         "DevCmb":{
             "name":"DevCmb",
             "hover":False,
-            "active":False
+            "active":False,
+            "status":"Offline"
         },
         "FireEntity":{
             "name":"FireEntity",
             "hover":False,
-            "active":False
+            "active":False,
+            "status":"Offline"
         },
         "Nibbles":{
             "name":"Nibbles",
             "hover":False,
-            "active":False
+            "active":False,
+            "status":"Offline"
         },
         "Shuflduf":{
             "name":"Shuflduf",
             "hover":False,
-            "active":False
+            "active":False,
+            "status":"Offline"
         },
     }
     user_pfps: dict = {
