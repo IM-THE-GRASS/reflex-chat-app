@@ -2,8 +2,6 @@ import reflex as rx
 from reflex.state import BaseState
 
 class State(rx.State):
-    user = "The Grass"
-    active_person:str = "DevCmb"
     people : dict[str, dict] = {
         "DevCmb":{
             "name":"DevCmb",
@@ -45,6 +43,32 @@ class State(rx.State):
         "eepydavid": "./javid.webp",
         "The Grass": "./josh.jpg"
     }
+    messages: list[list[str]] = [
+        ["DevCmb","HELLO"],
+        ["The Grass", "HII"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+        ["DevCmb","HELLO"],
+    ]
+    
+    
+    
+    user = "The Grass"
+    active_person:str = "DevCmb"
+    current_text:str
+    
+    def set_current_text(self, text):
+        self.current_text = text
+    def send_msg(self):
+        self.messages.append([self.user, self.current_text])
+    
+    
     def get_person(self, index):
         return self.people[index]
     def activate_person(self, person):

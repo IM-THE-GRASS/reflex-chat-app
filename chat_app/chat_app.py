@@ -4,22 +4,7 @@ from .components.avatar import *
 from .components.sidebar import *
 from chat_app.state import State
 
-
     
-
-
-
-def message(name, content):
-    return rx.hstack(
-        avatar(name),
-        rx.vstack(
-            rx.text(name, color="#71D083"),
-            rx.text(content, color="#71D083", font_size="24px", width = "50vw"),
-            gap="2px",
-        ),
-        padding="20px",
-        gap="12px",
-    ),
 
 
 
@@ -34,11 +19,10 @@ def index():
             chat_header(),
             rx.box(
                 rx.scroll_area(
-                    message("DevCmb", "mee"),
-                    message("The Grass", "hi"),
-                    message("FireEntity", "aaa"),
-                    message("The Grass", "TEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAP"),
-                    message("example person with no avatar", "I have no avatar!!"),
+                    rx.foreach(
+                        State.messages,
+                        message
+                    ),
                     type="always",
                     scrollbars="vertical",
                     height = "60vh",

@@ -32,6 +32,7 @@ def chat_input():
             font_size="25px",
             font_weight="600",
             height="58px",
+            on_change=State.set_current_text
         ),
         rx.button(
             rx.icon("send"),
@@ -40,7 +41,23 @@ def chat_input():
             border_radius="32px",
             width="58px",
             height="58px",
+            on_click=State.send_msg
         ),
         width="100%",
         padding="5px 40px",
+    )
+def message(msginfo: list):
+    name = msginfo[0]
+    content = msginfo[1]
+    return rx.box(
+        rx.hstack(
+            avatar(name),
+            rx.vstack(
+                rx.text(name, color="#71D083"),
+                rx.text(content, color="#71D083", font_size="24px", width = "50vw"),
+                gap="2px",
+            ),
+            padding="20px",
+            gap="12px",
+        ),
     )
