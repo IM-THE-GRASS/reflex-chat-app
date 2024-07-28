@@ -15,12 +15,9 @@ def message(name, content):
         rx.vstack(
             rx.text(name, color="#71D083"),
             rx.text(content, color="#71D083", font_size="24px", width = "50vw"),
-            align_items="flex-start",
             gap="2px",
         ),
         padding="20px",
-        justify_content="flex-start",
-        align_items="flex-start",
         gap="12px",
     ),
 
@@ -37,15 +34,14 @@ def index():
             chat_header(),
             rx.box(
                 rx.scroll_area(
-                    message("devcmb", "mee"),
-                    message("your", "mom"),
-                    message("your", "mom"),
-                    message("your", "momaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-                    message("your", "mom"),
-                    message("your", "mom"),
+                    message("DevCmb", "mee"),
+                    message("The Grass", "hi"),
+                    message("FireEntity", "aaa"),
+                    message("The Grass", "TEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAPTEXT WRAP"),
+                    message("example person with no avatar", "I have no avatar!!"),
                     type="always",
                     scrollbars="vertical",
-                    #height = "20%",
+                    height = "60vh",
                     width = "73vw"
                 ),
                 flex=1

@@ -80,11 +80,11 @@ def welcome_block():
     return rx.box(
         rx.desktop_only(
             rx.hstack(
-                avatar("user"),
+                avatar(State.user),
                 rx.desktop_only(
                     rx.vstack(
                         rx.text("Welcome back,", color="#C2F0C2", font_size="16px", font_weight="400"),
-                        rx.text("Josh", color="#C2F0C2", font_size="25px", font_weight="600"),
+                        rx.text(State.user, color="#C2F0C2", font_size="25px", font_weight="600"),
                         align_items="flex-start",
                         spacing="0px",
                     ),

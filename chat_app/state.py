@@ -2,7 +2,7 @@ import reflex as rx
 from reflex.state import BaseState
 
 class State(rx.State):
-    user = "user"
+    user = "The Grass"
     active_person:str = "DevCmb"
     people : dict[str, dict] = {
         "DevCmb":{
@@ -29,6 +29,12 @@ class State(rx.State):
             "active":False,
             "status":"Offline"
         },
+        "The Grass":{
+            "name":"The Grass",
+            "hover":False,
+            "active":False,
+            "status":"Online"
+        },
     }
     user_pfps: dict = {
         "user": "https://cloud-bv8ratyvx-hack-club-bot.vercel.app/3josh.jpg ",
@@ -37,6 +43,7 @@ class State(rx.State):
         "Nibbles": "./nibbler.webp",
         "Shuflduf": "./shuffler.webp",
         "eepydavid": "./javid.webp",
+        "The Grass": "./josh.jpg"
     }
     def get_person(self, index):
         return self.people[index]
