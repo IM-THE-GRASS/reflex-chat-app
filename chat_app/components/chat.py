@@ -4,16 +4,15 @@ from chat_app.state import State
 def chat_header():
     return rx.box(
         rx.hstack(
-            avatar("DevCmb", size=70),
+            avatar(State.active_person, size=70),
             rx.vstack(
-                rx.text("DevCmb", color="#71D083", font_size="25px", font_weight="600"),
-                rx.text("Online", color="#71D083", font_size="20px"),
+                rx.text(State.active_person, color="#71D083", font_size="25px", font_weight="600"),
+                rx.text(State.people[State.active_person]["status"], color="#71D083", font_size="20px"),
                 align_items="flex-start",
             ),
             padding="15px",
             gap="12px",
             width="100%",
-            bg="rgba(112, 254, 140, 0.11)",
             border="1px solid #2D5736",
             border_radius="81px",
         ),

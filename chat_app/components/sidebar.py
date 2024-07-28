@@ -1,59 +1,76 @@
 import reflex as rx
-
+from reflex_motion import motion
 from chat_app.components.avatar import avatar
 from chat_app.state import State
 
 def user_block(userinfo : list):
     name = userinfo[0]
     hover = userinfo[1]
+    
     active = userinfo[2]
-    status = userinfo[3]
-    print(status)
+    status = State.people[name]["status"]
     return rx.box(
         rx.desktop_only(
-            rx.hstack(
-            avatar(name),
-            rx.vstack(
-                rx.text(name, color="#71D083", font_size="25px", font_weight="600"),
-                rx.text(status, color="#71D083", font_size="16px", font_weight="400"),
-                align_items="flex-start",
-                spacing="0px",
-            ),
-            
-            width="auto",
-            height="79px",
-            padding="10px",
-            align_items="center",
-            gap="12px",
-            #bg = State.get_button_bg(name),
-            bg="rgba(112, 254, 140, 0.11)",
-            border_radius="16px",
-            border="2px solid #3E7949",
-            #on_mount=print
-            #on_mouse_enter= State.hover_person(name, True),
-            #on_mouse_leave= State.hover_person(name, False),
-            #on_mouse_down= State.activate_person(name)
-            
-        )
+            motion(
+                rx.hstack(
+                    avatar(
+                        name
+                    ),
+                    rx.vstack(
+                        rx.text(name, color="#71D083", font_size="25px", font_weight="600"),
+                        rx.text(status, color="#71D083", font_size="16px", font_weight="400"),
+                        align_items="flex-start",
+                        spacing="0px",
+                    ),
+                    
+                    width="auto",
+                    height="79px",
+                    padding="10px",
+                    align_items="center",
+                    gap="12px",
+                    bg="rgba(112, 254, 140, 0)",
+                    border_radius="16px",
+                    border="2px solid #3E7949",
+                    
+                    on_mouse_down= lambda: State.activate_person(name)
+                    
+                ),
+                while_hover={
+                    "scale":1.01,
+                    "background-color":"rgba(112, 254, 140, 0.11)"
+                },
+                while_tap={
+                    "scale": 0.85
+                },
+                transition={"type": "spring", "stiffness": 400, "damping": 17},
+            )
         ),
         rx.mobile_and_tablet(
-            rx.hstack(
-                avatar(name),
-                
-                width="80px",
-                height="80px",
-                padding="10px",
-                align_items="center",
-                gap="12px",
-                #bg = State.get_button_bg(name),
-                bg="rgba(112, 254, 140, 0.11)",
-                border_radius="16px",
-                border="2px solid #3E7949",
-                #on_mount=print
-                #on_mouse_enter= State.hover_person(name, True),
-                #on_mouse_leave= State.hover_person(name, False),
-                #on_mouse_down= State.activate_person(name)
-                
+            motion(
+                rx.hstack(
+                    avatar(name),
+                    
+                    width="80px",
+                    height="80px",
+                    padding="10px",
+                    align_items="center",
+                    gap="12px",
+                    #bg = State.get_button_bg(name),
+                    bg="rgba(112, 254, 140, 0)",
+                    border_radius="16px",
+                    border="2px solid #3E7949",
+                    
+                    on_mouse_down= lambda: State.activate_person(name)
+                        
+                ),
+                while_hover={
+                    "scale":1.01,
+                    "background-color":"rgba(112, 254, 140, 0.11)"
+                },
+                while_tap={
+                    "scale": 0.85
+                },
+                transition={"type": "spring", "stiffness": 400, "damping": 17},
             )
         ),
         padding_top = "5px"

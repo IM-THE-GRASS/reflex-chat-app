@@ -3,19 +3,19 @@ from reflex.state import BaseState
 
 class State(rx.State):
     user = "user"
-    active_person:str = "None"
+    active_person:str = "DevCmb"
     people : dict[str, dict] = {
         "DevCmb":{
             "name":"DevCmb",
             "hover":False,
-            "active":False,
+            "active":True,
             "status":"Offline"
         },
         "FireEntity":{
             "name":"FireEntity",
             "hover":False,
             "active":False,
-            "status":"Offline"
+            "status":"Online"
         },
         "Nibbles":{
             "name":"Nibbles",
@@ -40,3 +40,8 @@ class State(rx.State):
     }
     def get_person(self, index):
         return self.people[index]
+    def activate_person(self, person):
+        
+        self.people[self.active_person]["active"] = False
+        self.people[person]["active"] = True
+        self.active_person = person
