@@ -1,6 +1,22 @@
 import reflex as rx
 from chat_app.components.avatar import avatar
 from chat_app.state import State
+
+def chat_msgs():
+    return rx.box(
+        rx.scroll_area(
+            rx.foreach(
+                State.messages,
+                message
+            ),
+            type="always",
+            scrollbars="vertical",
+            height = "58vh",
+            width = "73vw"
+        ),
+        flex=1
+    ),
+
 def chat_header():
     return rx.box(
         rx.hstack(
@@ -22,6 +38,7 @@ def chat_header():
 def chat_input():
     return rx.hstack(
         rx.input(
+            value = State.current_text,
             placeholder="Type a message...",
             flex=1,
             bg="#25482D",

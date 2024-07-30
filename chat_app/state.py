@@ -1,5 +1,7 @@
 import reflex as rx
 from reflex.state import BaseState
+import os
+import pickle
 
 class State(rx.State):
     people : dict[str, dict] = {
@@ -27,7 +29,7 @@ class State(rx.State):
             "active":False,
             "status":"Offline"
         },
-        "The Grass":{
+        "The Grass":{   
             "name":"The Grass",
             "hover":False,
             "active":False,
@@ -59,20 +61,56 @@ class State(rx.State):
     
     
     
-    user = "The Grass"
+    
+    
+    user:str = "The Grass"
     active_person:str = "DevCmb"
     current_text:str
     
+    
+    
+    
+    
+    
+    def get_msgs(self):
+        msg_file = f"./user_msgs/{self.user}/{self.active_person}.pickle"
+        msg_dir = f"./user_msgs/{self.user}"
+        if not os.path.isfile(msg_file):
+            try:
+                os.makedirs(msg_dir)    
+            except:
+                pass
+            open(msg_file, 'x')
+            
+            with open(msg_file, "wb") as file:
+                pickle.dump([], file)
+            self.messages = []
+        else:
+            with open(msg_file, "rb") as file:
+                self.messages = pickle.load(file)
+    def update_msg_file(self):
+        msg_file = f"./user_msgs/{self.user}/{self.active_person}.pickle"
+        with open(msg_file, "wb") as file:
+            pickle.dump(self.messages, file)
+            
+            
+            
     def set_current_text(self, text):
         self.current_text = text
     def send_msg(self):
         self.messages.append([self.user, self.current_text])
+        self.update_msg_file()
+        self.current_text = ""
+    
+    
+    
     
     
     def get_person(self, index):
         return self.people[index]
     def activate_person(self, person):
-        
+        self.get_msgs()
         self.people[self.active_person]["active"] = False
         self.people[person]["active"] = True
         self.active_person = person
+        self.get_msgs()
