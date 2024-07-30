@@ -63,7 +63,7 @@ class State(rx.State):
     
     
     
-    user:str = "The Grass"
+    user:str = "Nibbles"
     active_person:str = "DevCmb"
     current_text:str
     
@@ -75,24 +75,31 @@ class State(rx.State):
     def get_msgs(self):
         msg_file = f"./user_msgs/{self.user}/{self.active_person}.pickle"
         msg_dir = f"./user_msgs/{self.user}"
+        msg_file_2 = f"./user_msgs/{self.active_person}/{self.user}.pickle"
+        msg_dir_2 = f"./user_msgs/{self.active_person}"
         if not os.path.isfile(msg_file):
-            try:
-                os.makedirs(msg_dir)    
-            except:
-                pass
-            open(msg_file, 'x')
-            
-            with open(msg_file, "wb") as file:
-                pickle.dump([], file)
-            self.messages = []
+            if not os.path.isfile(msg_file_2):
+                try:
+                    os.makedirs(msg_dir)    
+                except:
+                    pass
+                open(msg_file, 'x')
+                
+                with open(msg_file, "wb") as file:
+                    pickle.dump([], file)
+                self.messages = []
+            else:
+                with open(msg_file_2, "rb") as file:
+                    self.messages = pickle.load(file)
         else:
             with open(msg_file, "rb") as file:
                 self.messages = pickle.load(file)
     def update_msg_file(self):
         msg_file = f"./user_msgs/{self.user}/{self.active_person}.pickle"
+        if not os.path.isfile(msg_file):
+            msg_file = f"./user_msgs/{self.active_person}/{self.user}.pickle"
         with open(msg_file, "wb") as file:
-            pickle.dump(self.messages, file)
-            
+                pickle.dump(self.messages, file)
             
             
     def set_current_text(self, text):
