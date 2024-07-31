@@ -23,7 +23,7 @@ def chat_header():
             avatar(State.active_person, size=70),
             rx.vstack(
                 rx.text(State.active_person, color="#71D083", font_size="25px", font_weight="600"),
-                rx.text(State.people[State.active_person]["status"], color="#71D083", font_size="20px"),
+                rx.text(State.userdata[State.active_person]["status"], color="#71D083", font_size="20px"),
                 align_items="flex-start",
             ),
             padding="15px",

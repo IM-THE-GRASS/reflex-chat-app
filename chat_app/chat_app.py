@@ -10,8 +10,6 @@ from chat_app.state import State
 
 
 
-
-
 def index():
     return rx.hstack(
         sidebar(),

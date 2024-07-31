@@ -8,7 +8,7 @@ def user_block(userinfo : list):
     hover = userinfo[1]
     
     active = userinfo[2]
-    status = State.people[name]["status"]
+    status = State.userdata[name]["status"]
     return rx.box(
         rx.desktop_only(
             motion(
@@ -207,7 +207,7 @@ def sidebar():
                 rx.divider(border_color="rgba(113, 255, 143, 0.29)", border_width="2.5px", margin_y="15px"),
                 rx.scroll_area(
                     rx.foreach(
-                        State.people, 
+                        State.userdata, 
                         user_block,
                     ),
                     scrollbars="vertical",
@@ -230,7 +230,7 @@ def sidebar():
                 rx.divider(border_color="rgba(0, 255, 143, 0.29)", border_width="2.5px", margin_y="15px"),
                 rx.scroll_area(
                     rx.foreach(
-                        State.people, 
+                        State.userdata, 
                         user_block,
                     ),
                     scrollbars="vertical",
