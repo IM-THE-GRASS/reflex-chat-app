@@ -3,11 +3,7 @@ from reflex_motion import motion
 from chat_app.components.avatar import avatar
 from chat_app.state import State
 
-def user_block(userinfo : list):
-    name = userinfo[0]
-    hover = userinfo[1]
-    
-    active = userinfo[2]
+def user_block(name):
     status = State.userdata[name]["status"]
     return rx.box(
         rx.desktop_only(
@@ -205,14 +201,38 @@ def sidebar():
                 
                 welcome_block(),
                 rx.divider(border_color="rgba(113, 255, 143, 0.29)", border_width="2.5px", margin_y="15px"),
+                rx.hstack(
+                    rx.heading(
+                        "Friends:",
+                        color_scheme= "green",
+                        align="left",
+                        padding_right="65%"
+                    ),
+                    rx.button(
+                        rx.icon(
+                            "plus",
+                            stroke_width=5,
+                            size=999999
+                        
+                        ),
+                        color_scheme="green",
+                        variant="outline",
+                        size="1",
+                        height="5vh",
+                        width="5vh",
+                    ),
+                ),
+                
+                
                 rx.scroll_area(
                     rx.foreach(
-                        State.userdata, 
+                        State.current_friends, 
                         user_block,
                     ),
                     scrollbars="vertical",
                     height= "100%",
-                    spacing="2"
+                    spacing="2",
+                    on_mount=State.get_friends
                 ),
                 width="25vw",
                 height="100vh",
@@ -230,12 +250,13 @@ def sidebar():
                 rx.divider(border_color="rgba(0, 255, 143, 0.29)", border_width="2.5px", margin_y="15px"),
                 rx.scroll_area(
                     rx.foreach(
-                        State.userdata, 
+                        State.current_friends, 
                         user_block,
                     ),
                     scrollbars="vertical",
                     height= "100%",
-                    spacing="10px"
+                    spacing="10px",
+                    on_mount=State.get_friends
                 ),
                 width="112.5px",
                 height="100vh",

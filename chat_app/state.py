@@ -41,12 +41,21 @@ class State(rx.State):
     
     
     
-    
     user:str = "The Grass"
     active_person:str = "DevCmb"
     current_text:str
     username:str
     password:str
+    friends:dict[str, list[str]]
+    current_friends:list[str]
+    def get_friends(self):
+        self.friends = {}
+        for person in self.userdata:
+            self.friends[person] = list(self.userdata[person]["friends"])
+        self.current_friends = self.friends[self.user] 
+        print(self.current_friends)
+        print(self.friends)
+        print("AAAA")
     
     
     
@@ -75,10 +84,6 @@ class State(rx.State):
         if not os.path.isfile(msg_file):
             msg_file = f"./user_msgs/{self.active_person}/{self.user}.pickle"
         self.pickledump(msg_file, self.messages)
-    def say_hi(self,  *args):
-        print("hi")
-        open("./userdata.pickle", "x")
-        self.pickledump("./userdata.pickle",self.userdata)
             
     def set_current_text(self, text):
         self.current_text = text
@@ -87,20 +92,24 @@ class State(rx.State):
         self.messages.append([self.user, self.current_text])
         self.update_msg_file()
         self.current_text = ""
+        
+        
+        
+        
     def set_user(self):
         try:
             if self.password == self.userdata[self.username]["password"]:
                 self.password = ""
                 self.user = self.username
+                self.get_friends()
                 return rx.toast("Login succesful!")
+                
             else:
                 self.password = ""
                 return rx.toast("Incorrect username or password")
         except:
             self.password = ""
             return rx.toast("Incorrect username or password")
-        
-    
     def set_username(self, new_username):
         self.username = new_username
     def set_password(self, new_pass):
