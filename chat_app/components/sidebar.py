@@ -97,8 +97,10 @@ def swap_account_menu():
                     weight="bold",
                 ),
                 rx.input(
+                    value = State.username,
                     default_value=State.user,
                     placeholder="Enter your username",
+                    on_change=State.set_username
                 ),
                 rx.text(
                     "Password",
@@ -108,14 +110,17 @@ def swap_account_menu():
                     weight="bold",
                 ),
                 rx.input(
+                    value=State.password,
                     placeholder="Enter your password",
-                    type="password"
+                    type="password",
+                    on_change=State.set_password
                 ),
                 
                 rx.dialog.close(
                     rx.button(
                         "Confirm",
-                        color_scheme="green"
+                        color_scheme="green",
+                        on_click=State.set_user,
                     )
                 ),
                 direction="column",
@@ -171,12 +176,16 @@ def welcome_block():
                 rx.dialog.content(
                     rx.vstack(
                         rx.dialog.title("Settings"),
+                        rx.text(f"You are logged in as:"),
+                        rx.text(State.user, weight="bold", size= "5"),
+                        avatar(State.user, size=100, radius="large"),
+                        
                         swap_account_menu(),
                         rx.dialog.close(
                             rx.button(
                                 rx.hstack(
                                     rx.text("Confirm", size = "3"),
-                                    rx.icon("arrow-left-right", stroke_width=2, size=20)
+                                    rx.icon("check", stroke_width=3.5, size=20, padding_top = "3px")
                                 ),
                                 color_scheme="green",
                                 padding = "10px"

@@ -66,7 +66,8 @@ class State(rx.State):
     user:str = "The Grass"
     active_person:str = "DevCmb"
     current_text:str
-    
+    username:str
+    password:str
     
     
     
@@ -108,7 +109,14 @@ class State(rx.State):
         self.messages.append([self.user, self.current_text])
         self.update_msg_file()
         self.current_text = ""
+    def set_user(self):
+        self.user = self.username
+        return rx.toast("Login succesful!")
     
+    def set_username(self, new_username):
+        self.username = new_username
+    def set_password(self, new_pass):
+        self.password = new_pass
     
     
     
