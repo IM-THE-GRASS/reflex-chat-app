@@ -208,19 +208,51 @@ def sidebar():
                         align="left",
                         padding_right="65%"
                     ),
-                    rx.button(
-                        rx.icon(
-                            "plus",
-                            stroke_width=5,
-                            size=999999
-                        
+                    rx.dialog.root(
+                        rx.dialog.trigger(
+                            rx.button(
+                                rx.icon(
+                                    "plus",
+                                    stroke_width=5,
+                                    size=60
+                                
+                                ),
+                                color_scheme="green",
+                                variant="outline",
+                                size="1",
+                                height="5vh",
+                                width="5vh",
+                            ),
                         ),
-                        color_scheme="green",
-                        variant="outline",
-                        size="1",
-                        height="5vh",
-                        width="5vh",
-                    ),
+                        rx.dialog.content(
+                            rx.dialog.title(
+                                "Add friend:",
+                                color_scheme="green"
+                            ),
+                            rx.flex(
+                                rx.input(
+                                    value=State.friend_text,
+                                    placeholder="Enter your friend's username",
+                                    on_change=State.change_friend_text,
+                                    width="100%",
+                                    color_scheme="green"
+                                ),
+                                rx.dialog.close(
+                                    rx.button(
+                                        "Confirm",
+                                        color_scheme="green",
+                                        variant="soft",
+                                        on_click=State.add_friend
+                                    ),
+                                ),
+                                
+                                direction="column",
+                                spacing="3"
+                            ),
+                            color_scheme="green"
+                        )
+                    )
+                    
                 ),
                 
                 

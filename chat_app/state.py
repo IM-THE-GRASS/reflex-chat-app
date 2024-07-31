@@ -40,7 +40,7 @@ class State(rx.State):
     
     
     
-    
+    friend_text:str
     user:str = "The Grass"
     active_person:str = "DevCmb"
     current_text:str
@@ -58,7 +58,23 @@ class State(rx.State):
         print("AAAA")
     
     
+    def add_friend(self):
+        friend= self.friend_text
+        if not friend in self.userdata:
+            return rx.toast("User not found")
+        if friend in self.friends[self.user]:
+            return rx.toast("You are already friends with this user!")
+        else:
+            self.current_friends.append(friend) 
+            self.userdata[self.user]["friends"].append(friend)
+            self.pickledump(
+                "./userdata.pickle",
+                self.userdata
+            )
+            return rx.toast("Friend added successfully")
     
+    def change_friend_text(self, new_text):
+        self.friend_text = new_text
     
     
     def get_msgs(self):
@@ -88,13 +104,12 @@ class State(rx.State):
     def set_current_text(self, text):
         self.current_text = text
     def send_msg(self):
-        open("./")
         self.messages.append([self.user, self.current_text])
         self.update_msg_file()
         self.current_text = ""
         
         
-        
+
         
     def set_user(self):
         try:
