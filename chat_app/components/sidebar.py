@@ -75,49 +75,125 @@ def user_block(userinfo : list):
         ),
         padding_top = "5px"
     )
-
-def welcome_block():
-    return rx.box(
-        rx.desktop_only(
-            rx.hstack(
-                avatar(State.user),
-                rx.desktop_only(
-                    rx.vstack(
-                        rx.text("Welcome back,", color="#C2F0C2", font_size="16px", font_weight="400"),
-                        rx.text(State.user, color="#C2F0C2", font_size="25px", font_weight="600"),
-                        align_items="flex-start",
-                        spacing="0px",
-                    ),
+def swap_account_menu():
+    return rx.dialog.root(
+        rx.dialog.trigger(
+            rx.button(
+                rx.hstack(
+                    rx.text("Swap account", size = "3"),
+                    rx.icon("arrow-left-right", stroke_width=2, size=20)
                 ),
-                bg="rgba(112, 254, 140, 0.11)",
-                border_radius="16px",
-                width="100%",
-                #height="auto",
-                padding="10px",
-                align_items="center",
-                gap="12px",
+                color_scheme="green",
+                padding = "10px"
             )
         ),
-        rx.mobile_and_tablet(
-            rx.hstack(
-                avatar("user"),
-                bg="rgba(112, 254, 140, 0.11)",
-                border_radius="16px",
-                width="80px",
-                height="80px",
-                padding="10px",
-                align_items="center",
-                gap="12px",
-            )
+        rx.dialog.content(
+            rx.flex(
+                rx.text(
+                    "Name",
+                    as_="div",
+                    size="2",
+                    margin_bottom="4px",
+                    weight="bold",
+                ),
+                rx.input(
+                    default_value=State.user,
+                    placeholder="Enter your username",
+                ),
+                rx.text(
+                    "Password",
+                    as_="div",
+                    size="2",
+                    margin_bottom="4px",
+                    weight="bold",
+                ),
+                rx.input(
+                    placeholder="Enter your password",
+                    type="password"
+                ),
+                
+                rx.dialog.close(
+                    rx.button(
+                        "Confirm",
+                        color_scheme="green"
+                    )
+                ),
+                direction="column",
+                spacing="3",
+            ),
         ),
-        width = "100%"
-    )
+    ),
+def welcome_block():
+    return rx.dialog.root(
+                rx.dialog.trigger(
+                    rx.button(
+                        rx.box(
+                            rx.desktop_only(
+                                rx.hstack(
+                                    avatar(State.user),
+                                    rx.desktop_only(
+                                        rx.vstack(
+                                            rx.text("Welcome back,", color="#C2F0C2", font_size="16px", font_weight="400"),
+                                            rx.text(State.user, color="#C2F0C2", font_size="25px", font_weight="600"),
+                                            align_items="flex-start",
+                                            spacing="0px",
+                                        ),
+                                    ),
+                                    bg="rgba(112, 254, 140, 0.11)",
+                                    border_radius="16px",
+                                    width="100%",
+                                    #height="auto",
+                                    padding="10px",
+                                    align_items="center",
+                                    gap="12px",
+                                )
+                            ),
+                            rx.mobile_and_tablet(
+                                rx.hstack(
+                                    avatar("user"),
+                                    bg="rgba(112, 254, 140, 0.11)",
+                                    border_radius="16px",
+                                    width="80px",
+                                    height="80px",
+                                    padding="10px",
+                                    align_items="center",
+                                    gap="12px",
+                                )
+                            ),
+                            width = "100%"
+                        ),
+                        variant="ghost",
+                        border_radius = "16px",
+                        width = "100%",
+                        color_scheme="green"
+                    )
+                ),
+                rx.dialog.content(
+                    rx.vstack(
+                        rx.dialog.title("Settings"),
+                        swap_account_menu(),
+                        rx.dialog.close(
+                            rx.button(
+                                rx.hstack(
+                                    rx.text("Confirm", size = "3"),
+                                    rx.icon("arrow-left-right", stroke_width=2, size=20)
+                                ),
+                                color_scheme="green",
+                                padding = "10px"
+                            )
+                        ),
+                    ),
+                    
+                )
+            ),
+    
     
     
 def sidebar():
     return rx.box( 
         rx.desktop_only(
             rx.vstack(
+                
                 welcome_block(),
                 rx.divider(border_color="rgba(113, 255, 143, 0.29)", border_width="2.5px", margin_y="15px"),
                 rx.scroll_area(

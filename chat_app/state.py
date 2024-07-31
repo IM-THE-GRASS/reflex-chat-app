@@ -63,7 +63,7 @@ class State(rx.State):
     
     
     
-    user:str = "Nibbles"
+    user:str = "The Grass"
     active_person:str = "DevCmb"
     current_text:str
     
