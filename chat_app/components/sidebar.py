@@ -2,6 +2,51 @@ import reflex as rx
 from reflex_motion import motion
 from chat_app.components.avatar import avatar
 from chat_app.state import State
+def register_content():
+    return rx.dialog.content(
+        rx.dialog.title(
+            "Register"
+        ),
+        rx.flex(
+            rx.text(
+                "Username",
+                as_="div",
+                size="2",
+                margin_bottom="4px",
+                weight="bold",
+            ),
+            rx.input(
+                value = State.reg_username,
+                default_value=State.user,
+                placeholder="Enter your username",
+                on_change=State.reg_set_username
+            ),
+            rx.text(
+                "Password",
+                as_="div",
+                size="2",
+                margin_bottom="4px",
+                weight="bold",
+            ),
+            
+            rx.input(
+                value=State.reg_password,
+                placeholder="Enter your password",
+                type="password",
+                on_change=State.reg_set_password
+            ),
+            rx.dialog.close(
+                rx.button(
+                    "Confirm",
+                    color_scheme="green",
+                    on_click=State.register,
+                )
+            ),
+            direction="column",
+            spacing="3",
+        )
+    )
+
 
 def user_block(name):
     status = State.userdata[name]["status"]
@@ -80,7 +125,8 @@ def swap_account_menu():
                     rx.icon("arrow-left-right", stroke_width=2, size=20)
                 ),
                 color_scheme="green",
-                padding = "10px"
+                padding = "10px",
+                on_click=State.open_switch_account
             )
         ),
         rx.dialog.content(
@@ -105,24 +151,29 @@ def swap_account_menu():
                     margin_bottom="4px",
                     weight="bold",
                 ),
+                
                 rx.input(
                     value=State.password,
                     placeholder="Enter your password",
                     type="password",
                     on_change=State.set_password
                 ),
-                
-                rx.dialog.close(
-                    rx.button(
-                        "Confirm",
-                        color_scheme="green",
-                        on_click=State.set_user,
-                    )
+                rx.dialog.root(
+                    rx.dialog.trigger(
+                        rx.text("Don't have an account? click ", rx.link("here"), " to register!", size="1"),
+                    ),
+                    register_content(),
+                ),
+                rx.button(
+                    "Confirm",
+                    color_scheme="green",
+                    on_click=lambda: State.set_user,
                 ),
                 direction="column",
                 spacing="3",
             ),
         ),
+        open= State.switch_account
     ),
 def welcome_block():
     return rx.dialog.root(

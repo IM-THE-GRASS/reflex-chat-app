@@ -24,30 +24,63 @@ class State(rx.State):
         "eepydavid": "./javid.webp",
         "The Grass": "./josh.jpg"
     }
-    messages: list[list[str]] = [
-        ["DevCmb","HELLO"],
-        ["The Grass", "HII"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-        ["DevCmb","HELLO"],
-    ]
+    messages: list[list[str]] = []
     
     
     
     friend_text:str
     user:str = "The Grass"
-    active_person:str = "DevCmb"
+    active_person:str = user
     current_text:str
     username:str
     password:str
     friends:dict[str, list[str]]
     current_friends:list[str]
+    
+    
+    
+    
+    
+    switch_account:bool = False
+    
+    def open_switch_account(self):
+        self.switch_account = True
+    def close_switch_account(self):
+        self.switch_account = False
+    
+    
+    reg_username:str
+    reg_password:str
+    def reg_set_username(self, new_user):
+        self.reg_username = new_user
+    def reg_set_password(self, new_pas):
+        self.reg_password = new_pas
+    def register(self):
+        self.switch_account = False
+        username = self.reg_username
+        password = self.reg_password
+        if not username in self.userdata:
+            self.userdata[username] = {
+                'name': username,
+                'password': password,
+                'status': "Offline",
+                'friends':[]
+            }
+            self.pickledump(
+                "./userdata.pickle",
+                self.userdata
+            )
+            #self.user = self.username
+            #self.get_friends()
+            #self.messages = []
+            return rx.toast("Registered succesfully! You can now log in with the Swap account button")
+        else:
+            return rx.toast("This username is already in use!")
+    
+    
+    
+    
+    
     def get_friends(self):
         self.friends = {}
         for person in self.userdata:
@@ -112,11 +145,14 @@ class State(rx.State):
 
         
     def set_user(self):
+        self.switch_account = False
         try:
             if self.password == self.userdata[self.username]["password"]:
                 self.password = ""
                 self.user = self.username
                 self.get_friends()
+                self.messages = []
+                self.active_person = self.user
                 return rx.toast("Login succesful!")
                 
             else:
@@ -136,8 +172,8 @@ class State(rx.State):
     def get_person(self, index):
         return self.userdata[index]
     def activate_person(self, person):
-        self.userdata[self.active_person]["active"] = False
-        self.userdata[person]["active"] = True
+        #self.userdata[self.active_person]["active"] = False
+        #self.userdata[person]["active"] = True
         self.active_person = person
         print(person)
         self.get_msgs()
