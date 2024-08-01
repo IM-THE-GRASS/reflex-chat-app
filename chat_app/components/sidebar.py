@@ -249,7 +249,6 @@ def sidebar():
     return rx.box( 
         rx.desktop_only(
             rx.vstack(
-                
                 welcome_block(),
                 rx.divider(border_color="rgba(113, 255, 143, 0.29)", border_width="2.5px", margin_y="15px"),
                 rx.hstack(
@@ -351,5 +350,6 @@ def sidebar():
                 spacing="10px",
             )
         ),
-        height="100%"
+        height="100%",
+        on_mount=State.update_cookie
     )

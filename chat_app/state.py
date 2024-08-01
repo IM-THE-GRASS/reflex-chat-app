@@ -11,10 +11,8 @@ class State(rx.State):
         with open(file, "rb") as file:
             return pickle.load(file)
     userdata : dict[str, dict] = pickle.load(open("./userdata.pickle", "rb"))   
-    print(userdata)
     def load_userdata(self):
         self.userdata = self.pickleread("./userdata.pickle")
-        print("loaded the userdata")
     user_pfps: dict = {
         "user": "https://cloud-bv8ratyvx-hack-club-bot.vercel.app/3josh.jpg ",
         "DevCmb": "./devcbt.webp",
@@ -26,12 +24,18 @@ class State(rx.State):
     }
     messages: list[list[str]] = []
     
-    
-    
+    user_cookie: str = rx.Cookie(name="user")
     friend_text:str
-    user:str = "The Grass"
+    if user_cookie.replace(" ", "%20") in userdata:
+        user:str = user_cookie.replace("%20", " ")
+        print(user_cookie)
+    else:
+        print(user_cookie)
+        
+        user:str = " "
     active_person:str = user
     current_text:str
+    
     username:str
     password:str
     friends:dict[str, list[str]]
@@ -48,7 +52,15 @@ class State(rx.State):
     def close_switch_account(self):
         self.switch_account = False
     
-    
+    def update_cookie(self):
+        if str(self.user_cookie.replace("%20", " ")) in self.userdata:
+            self.user = self.user_cookie.replace("%20", " ")
+            self.get_friends()
+            self.active_person = self.user_cookie.replace("%20", " ")
+            print(self.user_cookie + "AAAAAA")
+        else:
+            print(self.user_cookie + "FAILURE")
+            self.user = " "
     reg_username:str
     reg_password:str
     def reg_set_username(self, new_user):
@@ -86,9 +98,6 @@ class State(rx.State):
         for person in self.userdata:
             self.friends[person] = list(self.userdata[person]["friends"])
         self.current_friends = self.friends[self.user] 
-        print(self.current_friends)
-        print(self.friends)
-        print("AAAA")
     
     
     def add_friend(self):
@@ -150,7 +159,9 @@ class State(rx.State):
             if self.password == self.userdata[self.username]["password"]:
                 self.password = ""
                 self.user = self.username
+                self.set_user_cookie(self.username)
                 self.get_friends()
+                
                 self.messages = []
                 self.active_person = self.user
                 return rx.toast("Login succesful!")
@@ -175,5 +186,4 @@ class State(rx.State):
         #self.userdata[self.active_person]["active"] = False
         #self.userdata[person]["active"] = True
         self.active_person = person
-        print(person)
         self.get_msgs()
