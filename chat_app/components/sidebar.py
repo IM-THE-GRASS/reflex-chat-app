@@ -2,6 +2,8 @@ import reflex as rx
 from reflex_motion import motion
 from chat_app.components.avatar import avatar
 from chat_app.state import State
+from chat_app.components.motions import motions
+
 def register_content():
     return rx.dialog.content(
         rx.dialog.title(
@@ -178,47 +180,51 @@ def swap_account_menu():
 def welcome_block():
     return rx.dialog.root(
                 rx.dialog.trigger(
-                    rx.button(
-                        rx.box(
-                            rx.desktop_only(
-                                rx.hstack(
-                                    avatar(State.user),
-                                    rx.desktop_only(
-                                        rx.vstack(
-                                            rx.text("Welcome back,", color="#C2F0C2", font_size="16px", font_weight="400"),
-                                            rx.text(State.user, color="#C2F0C2", font_size="25px", font_weight="600"),
-                                            align_items="flex-start",
-                                            spacing="0px",
+                    motions(
+                        rx.button(
+                            rx.box(
+                                rx.desktop_only(
+                                    rx.hstack(
+                                        avatar(State.user),
+                                        rx.desktop_only(
+                                            rx.vstack(
+                                                rx.text("Welcome back,", color="#C2F0C2", font_size="16px", font_weight="400"),
+                                                rx.text(State.user, color="#C2F0C2", font_size="25px", font_weight="600"),
+                                                align_items="flex-start",
+                                                spacing="0px",
+                                            ),
                                         ),
-                                    ),
-                                    bg="rgba(112, 254, 140, 0.11)",
-                                    border_radius="16px",
-                                    width="100%",
-                                    #height="auto",
-                                    padding="10px",
-                                    align_items="center",
-                                    gap="12px",
-                                )
+                                        bg="rgba(112, 254, 140, 0.11)",
+                                        border_radius="16px",
+                                        width="100%",
+                                        #height="auto",
+                                        padding="10px",
+                                        align_items="center",
+                                        gap="12px",
+                                    )
+                                ),
+                                rx.mobile_and_tablet(
+                                    rx.hstack(
+                                        avatar("user"),
+                                        bg="rgba(112, 254, 140, 0.11)",
+                                        border_radius="16px",
+                                        width="80px",
+                                        height="80px",
+                                        padding="10px",
+                                        align_items="center",
+                                        gap="12px",
+                                    )
+                                ),
+                                width = "100%"
                             ),
-                            rx.mobile_and_tablet(
-                                rx.hstack(
-                                    avatar("user"),
-                                    bg="rgba(112, 254, 140, 0.11)",
-                                    border_radius="16px",
-                                    width="80px",
-                                    height="80px",
-                                    padding="10px",
-                                    align_items="center",
-                                    gap="12px",
-                                )
-                            ),
-                            width = "100%"
+                            variant="ghost",
+                            border_radius = "16px",
+                            width = "100%",
+                            color_scheme="green"
                         ),
-                        variant="ghost",
-                        border_radius = "16px",
-                        width = "100%",
-                        color_scheme="green"
+                        width = "100%"
                     )
+                    
                 ),
                 rx.dialog.content(
                     rx.vstack(
@@ -260,19 +266,22 @@ def sidebar():
                     ),
                     rx.dialog.root(
                         rx.dialog.trigger(
-                            rx.button(
-                                rx.icon(
-                                    "plus",
-                                    stroke_width=5,
-                                    size=60
-                                
+                            motions(
+                                rx.button(
+                                    rx.icon(
+                                        "plus",
+                                        stroke_width=5,
+                                        size=60
+                                    
+                                    ),
+                                    color_scheme="green",
+                                    variant="outline",
+                                    size="1",
+                                    height="5vh",
+                                    width="5vh",
                                 ),
-                                color_scheme="green",
-                                variant="outline",
-                                size="1",
-                                height="5vh",
-                                width="5vh",
-                            ),
+                            )
+                            
                         ),
                         rx.dialog.content(
                             rx.dialog.title(
